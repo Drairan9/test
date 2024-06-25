@@ -5,4 +5,3 @@ pandas
 pybit
 python-dotenv
 ta
-pycryptodome
