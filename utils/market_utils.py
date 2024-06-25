@@ -1,5 +1,6 @@
 import pandas as pd
 from ta.momentum import RSIIndicator
+from utils.consts import *
 
 
 class MarketUtils:
@@ -13,4 +14,4 @@ class MarketUtils:
 
     @staticmethod
     def calculate_rsi(close: pd.Series) -> pd.Series:
-        return round(RSIIndicator(close, 14, True).rsi(), 2)
+        return round(RSIIndicator(close, DEFAULT_RSI_PERIOD, True).rsi(), 2)
