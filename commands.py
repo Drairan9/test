@@ -1,6 +1,7 @@
 from discord.ext import commands
 import discord
-from utils.market_utils import MarketUtils
+from services.market_service_rest import MarketServiceREST
+from utils.consts import *
 
 
 class DiscordCommands(commands.Cog):
@@ -8,22 +9,13 @@ class DiscordCommands(commands.Cog):
         self.client = client
 
     @commands.command()
-    async def hello(self, ctx, *, member: discord.Member = None):
-        """Says hello"""
-        member = member or ctx.author
-        await ctx.send(f'Hello {member.name}~')
-
-    @commands.command()
     async def current(self, ctx, *, member: discord.Member = None):
-        symbol = "SOLUSDT"
+        rsi_df = MarketServiceREST().get_rsi_list_with_timestamp(DEFAULT_CATEGORY, DEFAULT_SYMBOL, DEFAULT_INTERVAL)
 
-        rsi_list = await MarketUtils().get_latest_rsi_list(symbol=symbol)
-
-        await ctx.send(f'{symbol} current RSI: {rsi_list[0]}')
+        await ctx.send(f'{DEFAULT_SYMBOL} current rsi: {rsi_df["rsi"][0]}')
 
     @commands.command()
     async def last(self, ctx, *, member: discord.Member = None):
-        symbol = "SOLUSDT"
-        rsi_list = await MarketUtils().get_latest_rsi_list(symbol=symbol)
+        rsi_df = MarketServiceREST().get_rsi_list_with_timestamp(DEFAULT_CATEGORY, DEFAULT_SYMBOL, DEFAULT_INTERVAL)
 
-        await ctx.send(f'{symbol} last closed RSI: {rsi_list[1]}')
+        await ctx.send(f'{DEFAULT_SYMBOL} last closed rsi: {rsi_df["rsi"][1]}')
