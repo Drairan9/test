@@ -7,15 +7,16 @@ from utils.consts import *
 class DiscordCommands(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.MarketServiceREST = MarketServiceREST()
 
     @commands.command()
     async def current(self, ctx, *, member: discord.Member = None):
-        rsi_df = MarketServiceREST().get_rsi_list_with_timestamp(DEFAULT_CATEGORY, DEFAULT_SYMBOL, DEFAULT_INTERVAL)
+        rsi_df = self.MarketServiceREST.get_rsi_list_with_timestamp(DEFAULT_CATEGORY, DEFAULT_SYMBOL, DEFAULT_INTERVAL)
 
         await ctx.send(f'{DEFAULT_SYMBOL} current rsi: {rsi_df["rsi"][0]}')
 
     @commands.command()
     async def last(self, ctx, *, member: discord.Member = None):
-        rsi_df = MarketServiceREST().get_rsi_list_with_timestamp(DEFAULT_CATEGORY, DEFAULT_SYMBOL, DEFAULT_INTERVAL)
+        rsi_df = self.MarketServiceREST.get_rsi_list_with_timestamp(DEFAULT_CATEGORY, DEFAULT_SYMBOL, DEFAULT_INTERVAL)
 
         await ctx.send(f'{DEFAULT_SYMBOL} last closed rsi: {rsi_df["rsi"][1]}')

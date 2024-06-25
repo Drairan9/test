@@ -14,6 +14,7 @@ class RsiWorker:
         self.Client: Client = client
         self.MarketServiceWS = MarketServiceWS()
         self.MarketServiceREST = MarketServiceREST()
+        self.DiscordApiRest = DiscordApiRest()
 
         self._is_running: bool = False
 
@@ -44,8 +45,8 @@ class RsiWorker:
                                                                                    DEFAULT_SYMBOL,
                                                                                    DEFAULT_INTERVAL)
         last_closed_rsi: int = latest_rsi["rsi"][1]
-        message_content: str | None = DiscordHelperMessages().get_rsi_alert_message(last_closed_rsi, DEFAULT_RSI_MIN,
-                                                                                    DEFAULT_RSI_MAX)
+        message_content: str | None = DiscordHelperMessages.get_rsi_alert_message(last_closed_rsi, DEFAULT_RSI_MIN,
+                                                                                  DEFAULT_RSI_MAX)
         if message_content is None:
             return
 
