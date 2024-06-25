@@ -1,0 +1,7 @@
+discord.py
+loguru
+nest-asyncio
+pandas
+pybit
+python-dotenv
+ta
